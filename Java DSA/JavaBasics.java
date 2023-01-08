@@ -1,45 +1,49 @@
 public class JavaBasics {
 
-    public static void printArr(int arr[]) {
-        for (int i: arr) {
-            System.out.print(i + " ");
+    public static int search (int arr[], int target, int start, int end) {
+
+        if(start > end) {
+            return -1;
         }
-    }
 
-    public static void quickSort (int arr[], int start, int end) {
-        //base case
-        if (start >= end) {
-            return;
+        int mid = start + (end - start)/2;
+
+        if (arr[mid] == target) {
+            return mid;
         }
-        //recursive calls
-        int p = partition(arr, start, end);
-        quickSort(arr,start,p -1);
-        quickSort(arr,p+1,end);    
-    }
 
-    public static int partition (int arr[], int start, int end) {
-        int pivot = arr[end];
-        int i = start - 1 ;
+        //mid on line 1
+        if (arr[start] <= arr[mid]) {
+            //1st case
+            if (arr[start] <= target && target <=arr[mid]) {
+                return search (arr,target,start,mid-1);
+            }
+            //2nd case
+            else {
+                return search (arr,target,mid+1,end);
+            }
 
-        for (int j = start ; j < end ; j++) {
-            if (arr[j] <= pivot) {
-                int temp = arr[j];
-                i++;
-                arr[j] = arr[i];
-                arr[i] = temp;
+        }
+
+        //mid on line 2
+        else {
+            //3rd case
+            if (arr[mid] <= target && target <= arr[end]) {
+                return search(arr,target, mid+1, end);
+            }
+            //4th case
+            else {
+                return search(arr, target, start, mid-1);
             }
         }
-        i++;
-        int temp = arr[i];
-        arr[i] = pivot;
-        arr[end] = temp;
 
-        return i;
     }
 
     public static void main (String args[]) {
-        int arr[] = {4,5,3,2,6,7,5};
-        quickSort(arr, 0 , arr.length-1);
-        printArr(arr);
+        int arr[] = {4,5,6,7,0,1,2};
+        int target = 1;
+        int index = search(arr, target, 0, arr.length - 1);
+        System.out.println(index);
     }
+
 }
