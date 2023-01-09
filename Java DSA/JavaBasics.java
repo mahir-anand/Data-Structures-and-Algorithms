@@ -1,49 +1,62 @@
 public class JavaBasics {
 
-    public static int search (int arr[], int target, int start, int end) {
-
-        if(start > end) {
-            return -1;
+    public static String[] mergeSort (String[] arr, int start, int end) {
+        //base case
+        if (start == end) {
+            String[] a = { arr[start] };
+            return a;
         }
-
+        //recursive calls
         int mid = start + (end - start)/2;
+        String[] arr1 = mergeSort(arr, start, mid);
+        String[] arr2 = mergeSort(arr, mid + 1, end);
+        return merge(arr1, arr2);
+        
+    }
 
-        if (arr[mid] == target) {
-            return mid;
+    public static String[] merge (String[] arr1, String[] arr2) {
+        int m = arr1.length;
+        int n = arr2.length;
+        String[] arr3 = new String[m+n];
+
+        int idx = 0, i = 0, j = 0;
+
+        while (i<m && j<n) {
+            if (findSmaller(arr1[i],arr2[j])) {
+                arr3[idx] = arr1[i];
+                i++;
+            } else {
+                arr3[idx] = arr2[j];
+                j++;
+            }
+            idx++;
         }
 
-        //mid on line 1
-        if (arr[start] <= arr[mid]) {
-            //1st case
-            if (arr[start] <= target && target <=arr[mid]) {
-                return search (arr,target,start,mid-1);
-            }
-            //2nd case
-            else {
-                return search (arr,target,mid+1,end);
-            }
-
+        while (i<m) {
+            arr3[idx++] = arr1[i++];
         }
 
-        //mid on line 2
-        else {
-            //3rd case
-            if (arr[mid] <= target && target <= arr[end]) {
-                return search(arr,target, mid+1, end);
-            }
-            //4th case
-            else {
-                return search(arr, target, start, mid-1);
-            }
+        while (j<n) {
+            arr3[idx++] = arr2[j++];
         }
+
+        return arr3;
 
     }
 
+    public static boolean findSmaller (String a, String b) {
+        if (a.compareTo(b) < 0 ) {
+            return true;
+        }
+        return false;
+    }
+
     public static void main (String args[]) {
-        int arr[] = {4,5,6,7,0,1,2};
-        int target = 1;
-        int index = search(arr, target, 0, arr.length - 1);
-        System.out.println(index);
+        String[] arr = {"sun","earth","mars","mercury"};
+        String[] ans = mergeSort(arr, 0, arr.length-1);
+        for (String i : ans) {
+            System.err.print(i + " ");
+        }
     }
 
 }
