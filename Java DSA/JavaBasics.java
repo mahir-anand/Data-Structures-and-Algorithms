@@ -1,62 +1,44 @@
 public class JavaBasics {
 
-    public static String[] mergeSort (String[] arr, int start, int end) {
-        //base case
-        if (start == end) {
-            String[] a = { arr[start] };
-            return a;
-        }
-        //recursive calls
-        int mid = start + (end - start)/2;
-        String[] arr1 = mergeSort(arr, start, mid);
-        String[] arr2 = mergeSort(arr, mid + 1, end);
-        return merge(arr1, arr2);
-        
-    }
-
-    public static String[] merge (String[] arr1, String[] arr2) {
-        int m = arr1.length;
-        int n = arr2.length;
-        String[] arr3 = new String[m+n];
-
-        int idx = 0, i = 0, j = 0;
-
-        while (i<m && j<n) {
-            if (findSmaller(arr1[i],arr2[j])) {
-                arr3[idx] = arr1[i];
-                i++;
-            } else {
-                arr3[idx] = arr2[j];
-                j++;
+    public static int count (int arr[], int num, int low, int high) {
+        int count = 0;
+        for (int i = 0 ; i < arr.length ; i++) {
+            if (arr[i] == num){
+                count++;
             }
-            idx++;
         }
-
-        while (i<m) {
-            arr3[idx++] = arr1[i++];
-        }
-
-        while (j<n) {
-            arr3[idx++] = arr2[j++];
-        }
-
-        return arr3;
-
+        return count;
     }
 
-    public static boolean findSmaller (String a, String b) {
-        if (a.compareTo(b) < 0 ) {
-            return true;
+    public static int majorityElement (int arr[], int low, int high) {
+        //base case
+        if (low == high) {
+            return arr[low];
         }
-        return false;
-    }
+        //recursive case
+        int mid = low + (high - low)/2;
+        int left = majorityElement(arr, low, mid);
+        int right = majorityElement(arr, mid+1, high);
 
+        //if the majority element is the same
+        if (left == right) {
+            return left;
+        }
+
+        //if the majority elements are different
+        int countLeft = count(arr,left,low,high);
+        int countRight = count(arr,right,low,high);
+
+        if (countLeft > countRight) {
+            return left;
+        } else {
+            return right;
+        }
+
+    }
     public static void main (String args[]) {
-        String[] arr = {"sun","earth","mars","mercury"};
-        String[] ans = mergeSort(arr, 0, arr.length-1);
-        for (String i : ans) {
-            System.err.print(i + " ");
-        }
+        int arr[] = {1,3,1,4,5,1,1,6,1,7};
+        System.out.println(majorityElement(arr, 0, arr.length - 1));
     }
 
 }
