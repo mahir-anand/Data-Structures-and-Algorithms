@@ -1,44 +1,52 @@
 public class JavaBasics {
 
-    public static int count (int arr[], int num, int low, int high) {
+    public static int swapCount (int arr[], int start, int end)  {
         int count = 0;
-        for (int i = 0 ; i < arr.length ; i++) {
-            if (arr[i] == num){
-                count++;
-            }
+        if ( end > start) {
+            int mid = start + (end - start)/2;
+            count = swapCount(arr, start, mid);
+            count += swapCount(arr, mid+1, end);
+            count += merge(arr,start,mid+1,end);
         }
         return count;
     }
 
-    public static int majorityElement (int arr[], int low, int high) {
-        //base case
-        if (low == high) {
-            return arr[low];
-        }
-        //recursive case
-        int mid = low + (high - low)/2;
-        int left = majorityElement(arr, low, mid);
-        int right = majorityElement(arr, mid+1, high);
-
-        //if the majority element is the same
-        if (left == right) {
-            return left;
-        }
-
-        //if the majority elements are different
-        int countLeft = count(arr,left,low,high);
-        int countRight = count(arr,right,low,high);
-
-        if (countLeft > countRight) {
-            return left;
-        } else {
-            return right;
+    public static int merge (int arr[], int start, int mid, int end) {
+        int count = 0;
+        int k = 0, i = start, j = mid;
+        int temp[] = new int[end-start+1];
+        while (i < mid && j <=end) {
+            if (arr[i]>arr[j]) {
+                temp [k] = arr[j];
+                j++;
+                count += mid - i;
+            } else {
+                temp [k] = arr[i];
+                i++;
+            }
+            k++;
         }
 
+        while (i<mid) {
+            temp[k++] = arr[i++];
+        }
+
+        while (j<=end) {
+            temp[k++] = arr[j++];
+        }
+
+        k = 0;
+        for (i = start; i < end; i++) {
+            arr[i] = temp[k];
+            k++;
+        }
+
+        return count;
     }
+
     public static void main (String args[]) {
-        int arr[] = {1,3,1,4,5,1,1,6,1,7};
-        System.out.println(majorityElement(arr, 0, arr.length - 1));
+        int arr[] = {5,5,5};
+        System.out.println(swapCount(arr, 0, arr.length-1));
     }
 
 }
