@@ -1,52 +1,23 @@
 public class JavaBasics {
 
-    public static int swapCount (int arr[], int start, int end)  {
-        int count = 0;
-        if ( end > start) {
-            int mid = start + (end - start)/2;
-            count = swapCount(arr, start, mid);
-            count += swapCount(arr, mid+1, end);
-            count += merge(arr,start,mid+1,end);
-        }
-        return count;
-    }
-
-    public static int merge (int arr[], int start, int mid, int end) {
-        int count = 0;
-        int k = 0, i = start, j = mid;
-        int temp[] = new int[end-start+1];
-        while (i < mid && j <=end) {
-            if (arr[i]>arr[j]) {
-                temp [k] = arr[j];
-                j++;
-                count += mid - i;
-            } else {
-                temp [k] = arr[i];
+    public static StringBuilder compress (String str) {
+        StringBuilder comp = new StringBuilder("");
+        for (int i = 0 ; i < str.length() ; i++) {
+            int count = 0;
+            while (i < str.length() - 1 && str.charAt(i) == str.charAt(i+1)) {
+                count++;
                 i++;
             }
-            k++;
+            comp.append(str.charAt(i));
+            // if (count>1) {
+            //     comp.append(count.toString());
+            // }
         }
-
-        while (i<mid) {
-            temp[k++] = arr[i++];
-        }
-
-        while (j<=end) {
-            temp[k++] = arr[j++];
-        }
-
-        k = 0;
-        for (i = start; i < end; i++) {
-            arr[i] = temp[k];
-            k++;
-        }
-
-        return count;
+        return comp;
     }
-
+   
     public static void main (String args[]) {
-        int arr[] = {5,5,5};
-        System.out.println(swapCount(arr, 0, arr.length-1));
+        System.out.println(compress("aabbb"));
     }
 
 }
