@@ -1,23 +1,28 @@
 public class JavaBasics {
 
-    public static StringBuilder compress (String str) {
-        StringBuilder comp = new StringBuilder("");
-        for (int i = 0 ; i < str.length() ; i++) {
-            int count = 0;
-            while (i < str.length() - 1 && str.charAt(i) == str.charAt(i+1)) {
-                count++;
-                i++;
-            }
-            comp.append(str.charAt(i));
-            // if (count>1) {
-            //     comp.append(count.toString());
-            // }
+    public static void changeArr (int arr[], int start, int num) {
+        // base case
+        if (start == arr.length) {
+            printArr(arr);
+            return;
         }
-        return comp;
+        //recursion
+        arr[start] = num;
+        changeArr (arr, start+1, num+1); //recursive call
+        arr[start] -= 2; //backtracking step
     }
-   
+
+    public static void printArr(int arr[]) {
+        for (int i : arr) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
+
     public static void main (String args[]) {
-        System.out.println(compress("aabbb"));
+        int arr[] = new int[5];
+        changeArr(arr, 0, 1);
+        printArr(arr);
     }
 
 }
