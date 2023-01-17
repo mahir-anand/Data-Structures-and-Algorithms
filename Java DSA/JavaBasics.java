@@ -1,28 +1,24 @@
 public class JavaBasics {
 
-    public static void changeArr (int arr[], int start, int num) {
-        // base case
-        if (start == arr.length) {
-            printArr(arr);
+    public static void subsets(String str, String ans, int i) {
+        //base case
+        if (i == str.length()) {
+            if (ans.length() == 0) {
+                System.out.println("Null");
+            }
+            System.out.println(ans);
             return;
         }
         //recursion
-        arr[start] = num;
-        changeArr (arr, start+1, num+1); //recursive call
-        arr[start] -= 2; //backtracking step
-    }
-
-    public static void printArr(int arr[]) {
-        for (int i : arr) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
+        //Choice Yes
+        subsets(str, ans+str.charAt(i), i+1);
+        //Choice No
+        subsets(str, ans, i+1);
     }
 
     public static void main (String args[]) {
-        int arr[] = new int[5];
-        changeArr(arr, 0, 1);
-        printArr(arr);
+        String str = "abc";
+        subsets(str, "", 0);
     }
 
 }
