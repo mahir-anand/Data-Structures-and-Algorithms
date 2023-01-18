@@ -1,24 +1,14 @@
 public class JavaBasics {
 
-    public static void subsets(String str, String ans, int i) {
+    public static void permutation (String str, String ans) { // "abc" , ""
         //base case
-        if (i == str.length()) {
-            if (ans.length() == 0) {
-                System.out.println("Null");
-            }
-            System.out.println(ans);
-            return;
-        }
-        //recursion
-        //Choice Yes
-        subsets(str, ans+str.charAt(i), i+1);
-        //Choice No
-        subsets(str, ans, i+1);
-    }
 
+        //recursion
+        newStr = str.substring(0,i) + str.substring(i+1);
+        permutation(newStr, ans+str.charAt(i));
+    }
     public static void main (String args[]) {
-        String str = "abc";
-        subsets(str, "", 0);
+
     }
 
 }
