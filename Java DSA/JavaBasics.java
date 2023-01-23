@@ -1,19 +1,23 @@
 public class JavaBasics {
 
-    public static void nQueens (char board[][], int row) {
+    public static boolean nQueens (char board[][], int row) {
         //base case
         if (row == board.length) {
             printBoard(board);
-            return;
+            // count++;
+            return true;
         }
         //recursion
         for (int j = 0 ; j < board.length ; j++) {
             if (isSafe (board,row,j)) {
                 board [row][j] = 'Q';
-                nQueens(board, row+1);
+                if (nQueens(board, row+1)) {
+                    return true;
+                }
             }
             board[row][j] = '.';
         }
+        return false;
     }
 
     public static boolean isSafe (char board[][], int row, int col) {
@@ -48,6 +52,7 @@ public class JavaBasics {
         }
     }
 
+    static int count = 0;
     public static void main (String args[]) {
         //initializing board
         int n = 5;
