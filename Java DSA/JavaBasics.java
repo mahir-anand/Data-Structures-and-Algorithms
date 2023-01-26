@@ -1,21 +1,21 @@
 public class JavaBasics {
 
-    public static void subString (String str, String sub, int i) {
+   public static void permutation (String str, String perString) { 
         //base case
-        if (i == str.length()) {
-            if (sub == "") {
-                System.out.println("Null");
-            } else {
-                System.out.println(sub);
-            }
+        if (str.length() == 0) {
+            System.out.println(perString);
             return;
         }
         //recursion
-        subString(str, sub + str.charAt(i), i+1); //yes choice
-        subString(str, sub, i+1); //no choice
-    }
+        for (int i = 0 ; i < str.length() ; i++) {
+            // permutation(str.substring(0, i) + str.substring(i + 1), perString + str.charAt(i));
+            // permutation(str.substring(0, i) + str.substring(i + 1),perString);
+            String newStr = str.substring(0,i) + str.substring(i+1);
+            permutation(newStr, perString + str.charAt(i));
+        }
+   }
     public static void main (String args[]) {
         String str = "abc";
-        subString("abc","",0);
+        permutation(str, "");
     }
 }
