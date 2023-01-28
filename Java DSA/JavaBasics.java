@@ -1,27 +1,58 @@
 public class JavaBasics {
 
-    static char[][] L = { {}, {} , {'a','b','c'}, {'d','e','f'}, {'g','h','i'}, {'j','k','l'}, {'m','n','o'}, {'p','q','r','s'}, 
-    {'t','u','v'}, {'w','x','y','z'}};
-
-    public static void combFinder (String str, int pos, String comb) {
-        if (str.length() == 0) {
-            System.out.println("");
+    public static void pathFinder (int maze[][], int solution[][], int row, int col) {
+        //base case
+        if (row == maze.length - 1 && col == maze.length - 1 && maze[row][col] == 1) {
+            solution [row][col] = 1;
+            printPath(solution);
             return;
-        } else if (pos == str.length()) {
-            System.out.println(comb);
+        } else if (row >= maze.length || col >= maze.length) {
             return;
         }
 
-        //recursion
-        char curLetters [] = L[Character.getNumericValue (str.charAt(pos))];
-        for (int i = 0 ; i < curLetters.length ; i++) {
-            combFinder(str, pos+1, comb + curLetters[i]);
+        //recursion 
+
+        //down
+        if (row < maze.length - 1 && maze [row++][col] != 0 && solution [row++][col] != 1) {
+            row++;
+            solution[row][col] = 1;
+            pathFinder (maze,solution,row,col);
+            solution[row][col] = 0;
+            row--;
+        }
+
+        //left
+        if (col < maze.length -1 && maze [row][col++] != 0 && solution [row][col++] != 1) {
+            col++;
+            solution[row][col] = 1;
+            pathFinder (maze,solution,row,col);
+            solution[row][col] = 0;
+            col--;
         }
 
     }
 
+    public static void printPath (int solution[][]) {
+        for (int i = 0 ; i < solution.length ; i ++) {
+            for (int j = 0 ; j < solution.length ; j++) {
+                System.out.print(solution[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
     public static void main (String args[]) {
-        combFinder("2",0,"");
-    }
+    int maze[][] = {
+    {1,1,0},
+    {1,1,1}, 
+    {1,1,1}
+   };
+
+    int solution [][] = {{0,0,0},
+    {0,0,0},
+    {0,0,0}
+    };
+    pathFinder(maze,solution,0,0);
+
+}
 
 }
