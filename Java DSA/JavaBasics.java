@@ -1,58 +1,59 @@
 public class JavaBasics {
 
-    public static void pathFinder (int maze[][], int solution[][], int row, int col) {
-        //base case
-        if (row == maze.length - 1 && col == maze.length - 1 && maze[row][col] == 1) {
-            solution [row][col] = 1;
-            printPath(solution);
-            return;
-        } else if (row >= maze.length || col >= maze.length) {
-            return;
-        }
-
-        //recursion 
-
-        //down
-        if (row < maze.length - 1 && maze [row++][col] != 0 && solution [row++][col] != 1) {
-            row++;
-            solution[row][col] = 1;
-            pathFinder (maze,solution,row,col);
-            solution[row][col] = 0;
-            row--;
-        }
-
-        //left
-        if (col < maze.length -1 && maze [row][col++] != 0 && solution [row][col++] != 1) {
-            col++;
-            solution[row][col] = 1;
-            pathFinder (maze,solution,row,col);
-            solution[row][col] = 0;
-            col--;
-        }
-
+    public static boolean isSafe (int maze[][], int row, int col) {
+        return (row < maze.length && col < maze.length && row >= 0 && col >=0 && maze[row][col] != 0);
     }
 
-    public static void printPath (int solution[][]) {
-        for (int i = 0 ; i < solution.length ; i ++) {
-            for (int j = 0 ; j < solution.length ; j++) {
-                System.out.print(solution[i][j] + " ");
+    public static boolean findPathUtil (int maze[][], int solution[][], int row, int col) {
+        //base case
+        if (row == maze.length - 1 && col == row && maze[row][col] == 1) {
+            solution[row][col] = 1;
+            return true;
+        }
+
+        //recursion
+        if (isSafe(maze, row, col)) {
+            solution [row][col] = 1;
+            if (findPathUtil(maze, solution, row+1, col) ) {
+                return true;
+            }
+
+            if (findPathUtil(maze, solution, row, col+1)) {
+                return true; 
+            }
+
+            solution[row][col] = 0;
+            return false;
+        }
+
+        return false;
+    }
+
+    public static void printArray (int maze[][]) {
+        for (int i = 0 ; i < maze.length ; i ++) {
+            for (int j = 0 ; j < maze.length ; j++) {
+                System.out.print(maze[i][j] + " ");
             }
             System.out.println();
         }
     }
+
+    public static void findPath (int maze[][]) {
+        int solution [][] = new int [maze.length][maze.length];
+        if (findPathUtil(maze, solution, 0, 0) ) {
+            printArray(solution);
+        } else {
+            System.out.println("No solution exists");
+        }
+    }
+
     public static void main (String args[]) {
-    int maze[][] = {
-    {1,1,0},
-    {1,1,1}, 
-    {1,1,1}
-   };
-
-    int solution [][] = {{0,0,0},
-    {0,0,0},
-    {0,0,0}
-    };
-    pathFinder(maze,solution,0,0);
-
-}
+        int maze[][] = {{1,1,0,0},
+                        {1,1,1,1},
+                        {1,1,0,1},
+                        {0,1,1,1}};
+        int n = maze.length;
+        findPath(maze);
+    }
 
 }
