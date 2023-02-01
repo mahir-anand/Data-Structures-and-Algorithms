@@ -1,59 +1,70 @@
 public class JavaBasics {
 
-    public static boolean isSafe (int maze[][], int row, int col) {
-        return (row < maze.length && col < maze.length && row >= 0 && col >=0 && maze[row][col] != 0);
+    public static boolean isSafe (int solution[][], int row, int col) {
+        return (row >= 0 && col >= 0 && row < solution.length && col < solution.length && solution[row][col] == -1);
     }
 
-    public static boolean findPathUtil (int maze[][], int solution[][], int row, int col) {
+    public static boolean printTourUtil (int solution[][], int xPath[], int yPath[], int row, int col, int moveCount) {
         //base case
-        if (row == maze.length - 1 && col == row && maze[row][col] == 1) {
-            solution[row][col] = 1;
+        if (moveCount == 64) {
             return true;
         }
-
+        
         //recursion
-        if (isSafe(maze, row, col)) {
-            solution [row][col] = 1;
-            if (findPathUtil(maze, solution, row+1, col) ) {
-                return true;
-            }
+        for (int i = 0 ; i < 8 ; i ++) {
+            int x = row + xPath[i];
+            int y = col + yPath[i];
+            
 
-            if (findPathUtil(maze, solution, row, col+1)) {
-                return true; 
+            if (isSafe (solution,x,y)) {
+                solution[row][col] = moveCount;
+                if (printTourUtil(solution, xPath, yPath, x, y, moveCount+1)) {
+                    return true;
+                } else {
+                    solution[row][col] = -1;
+                }
             }
-
-            solution[row][col] = 0;
-            return false;
         }
-
         return false;
     }
 
-    public static void printArray (int maze[][]) {
-        for (int i = 0 ; i < maze.length ; i ++) {
-            for (int j = 0 ; j < maze.length ; j++) {
-                System.out.print(maze[i][j] + " ");
+    public static void printTour (int solution[][]) {
+        int xPath[] = {2,1,-1,-2,-2,-1,1,2};
+        int yPath[] = {1,2,2,1,-1,-2,-2,-1};
+
+        solution[0][0] = 0;
+
+        if (printTourUtil(solution, xPath, yPath, 0, 0, 1)) {
+            printArray (solution);
+        } else {
+            System.out.println("No solution");
+        }
+
+    }
+
+    public static void printArray (int solution[][]) {
+        for (int i = 0 ; i < solution.length ; i++) {
+            for (int j = 0 ; j < solution.length ; j++) {
+                if (solution[i][j] < 10) {
+                    System.out.print(solution[i][j] + "   ");
+                } else {
+                    System.out.print(solution[i][j] + "  ");
+                }
             }
             System.out.println();
         }
     }
 
-    public static void findPath (int maze[][]) {
-        int solution [][] = new int [maze.length][maze.length];
-        if (findPathUtil(maze, solution, 0, 0) ) {
-            printArray(solution);
-        } else {
-            System.out.println("No solution exists");
-        }
-    }
-
     public static void main (String args[]) {
-        int maze[][] = {{1,1,0,0},
-                        {1,1,1,1},
-                        {1,1,0,1},
-                        {0,1,1,1}};
-        int n = maze.length;
-        findPath(maze);
+        int solution[][] = new int[8][8];
+        for (int i = 0 ; i < solution.length ; i++) {
+            for (int j = 0 ; j < solution.length ; j++) {
+                solution [i][j] = -1;
+            }
+        }
+
+        printTour(solution);
+
     }
 
 }
