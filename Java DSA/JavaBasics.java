@@ -16,12 +16,12 @@ public class JavaBasics {
             int y = col + yPath[i];
             
 
-            if (isSafe (solution,x,y)) {
-                solution[row][col] = moveCount;
+            if (isSafe (solution,x,y)) { 
+                solution[x][y] = moveCount;
                 if (printTourUtil(solution, xPath, yPath, x, y, moveCount+1)) {
                     return true;
                 } else {
-                    solution[row][col] = -1;
+                    solution[x][y] = -1;
                 }
             }
         }
