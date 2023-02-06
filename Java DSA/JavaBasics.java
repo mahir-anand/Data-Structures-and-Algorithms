@@ -1,70 +1,21 @@
 public class JavaBasics {
 
-    public static boolean isSafe (int solution[][], int row, int col) {
-        return (row >= 0 && col >= 0 && row < solution.length && col < solution.length && solution[row][col] == -1);
-    }
-
-    public static boolean printTourUtil (int solution[][], int xPath[], int yPath[], int row, int col, int moveCount) {
-        //base case
-        if (moveCount == 64) {
-            return true;
-        }
-        
-        //recursion
-        for (int i = 0 ; i < 8 ; i ++) {
-            int x = row + xPath[i];
-            int y = col + yPath[i];
-            
-
-            if (isSafe (solution,x,y)) { 
-                solution[x][y] = moveCount;
-                if (printTourUtil(solution, xPath, yPath, x, y, moveCount+1)) {
-                    return true;
-                } else {
-                    solution[x][y] = -1;
-                }
+    public static int maxSum (int arr[]) {
+        int sum = 0;
+        int maxSum = Integer.MIN_VALUE;
+        for (int i = 0 ; i < arr.length ; i++) {
+            sum += arr [i];
+            if (sum < 0) {
+                sum = 0;
             }
-        }
-        return false;
-    }
-
-    public static void printTour (int solution[][]) {
-        int xPath[] = {2,1,-1,-2,-2,-1,1,2};
-        int yPath[] = {1,2,2,1,-1,-2,-2,-1};
-
-        solution[0][0] = 0;
-
-        if (printTourUtil(solution, xPath, yPath, 0, 0, 1)) {
-            printArray (solution);
-        } else {
-            System.out.println("No solution");
+            maxSum = Math.max(sum,maxSum);
         }
 
+        return maxSum;
     }
-
-    public static void printArray (int solution[][]) {
-        for (int i = 0 ; i < solution.length ; i++) {
-            for (int j = 0 ; j < solution.length ; j++) {
-                if (solution[i][j] < 10) {
-                    System.out.print(solution[i][j] + "   ");
-                } else {
-                    System.out.print(solution[i][j] + "  ");
-                }
-            }
-            System.out.println();
-        }
-    }
-
+    
     public static void main (String args[]) {
-        int solution[][] = new int[8][8];
-        for (int i = 0 ; i < solution.length ; i++) {
-            for (int j = 0 ; j < solution.length ; j++) {
-                solution [i][j] = -1;
-            }
-        }
-
-        printTour(solution);
-
+        int arr[] = {-2,-3,1,3,6,4,5,-3};
+        System.out.println(maxSum(arr));
     }
-
 }
