@@ -1,31 +1,28 @@
 public class JavaBasics {
 
-    public static int maxSum (int arr[]) {
-        int sum = 0;
-        int negCount = 0;
-        int maxNeg = Integer.MIN_VALUE;
-        int maxSum = Integer.MIN_VALUE;
-        for (int i = 0 ; i < arr.length ; i++) {
-            if (arr[i] < 0) {
-                negCount++;
-                maxNeg = Math.max(maxNeg,arr[i]);
-            }
-            sum += arr [i];
-            if (sum < 0) {
-                sum = 0;
-            }
-            maxSum = Math.max(sum,maxSum);
+    public static int trappedWater (int height[]) {
+        int leftMax[] = new int [height.length];
+        int rightMax[] = new int [height.length];
+        int water = 0;
 
+        leftMax[0] = height[0];
+        for (int i = 1 ; i < height.length ; i ++) {
+            leftMax [i] = Math.max(height[i],leftMax[i-1]);
         }
 
-        if (negCount == arr.length) {
-            return maxNeg;
+        rightMax[height.length-1] = height[height.length-1];
+        for (int i = height.length - 2 ; i >=0 ; i--) {
+            rightMax [i] = Math.max(height[i],rightMax[i+1]);
         }
-        return maxSum;
+
+        for (int i = 0 ; i < height.length ; i++) {
+            water += Math.min(rightMax[i],leftMax[i]) - height[i];
+        }
+
+        return water;
     }
-    
     public static void main (String args[]) {
-        int arr[] = {-2,-3,1,3,6,4,5,-3};
-        System.out.println(maxSum(arr));
+        int height[] = {4,2,0,6,3,2,5};
+        System.out.println(trappedWater(height));
     }
 }
