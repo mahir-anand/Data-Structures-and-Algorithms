@@ -1,28 +1,49 @@
 public class JavaBasics {
 
-    public static int trappedWater (int height[]) {
-        int leftMax[] = new int [height.length];
-        int rightMax[] = new int [height.length];
-        int water = 0;
-
-        leftMax[0] = height[0];
-        for (int i = 1 ; i < height.length ; i ++) {
-            leftMax [i] = Math.max(height[i],leftMax[i-1]);
+  public static void printSpiral(int matrix[][]) {
+    int startCol = 0;
+    int startRow = 0;
+    int endCol = matrix[0].length - 1;
+    int endRow = matrix.length - 1;
+    
+    while(startRow <= endRow && startCol <= endCol) {
+        // top boundary
+        for (int i = startCol ; i <= endCol ; i++) {
+            System.out.print(matrix [startRow][i] + " ");
         }
 
-        rightMax[height.length-1] = height[height.length-1];
-        for (int i = height.length - 2 ; i >=0 ; i--) {
-            rightMax [i] = Math.max(height[i],rightMax[i+1]);
+        // right boundary
+        for (int i = startRow + 1 ; i <= endCol ; i++) {
+            System.out.print(matrix [i][endCol] + " ");
         }
 
-        for (int i = 0 ; i < height.length ; i++) {
-            water += Math.min(rightMax[i],leftMax[i]) - height[i];
+        // bottom boundary
+        for (int i = endCol - 1 ; i >= startCol ; i--) {
+            if (endRow == startRow) {
+                break;
+            }
+            System.out.print(matrix [endRow][i] + " ");
         }
 
-        return water;
+        // left boundary
+        for (int i = endRow - 1 ; i > startRow ; i--) {
+            if (endCol == startCol) {
+                break;
+            }
+            System.out.print(matrix [i][startCol] + " ");
+        }
+        
+        startRow ++;
+        startCol ++;
+        endRow --;
+        endCol --;
     }
+  }
     public static void main (String args[]) {
-        int height[] = {4,2,0,6,3,2,5};
-        System.out.println(trappedWater(height));
+        int matrix[][] = { {1,2,3,4},
+                           {5,6,7,8},
+                           {9,10,11,12},
+                           {13,14,15,16}};
+        printSpiral(matrix);
     }
 }
