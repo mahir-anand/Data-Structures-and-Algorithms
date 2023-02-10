@@ -1,26 +1,23 @@
 public class JavaBasics {
 
-    public static void search(int matrix[][], int key) {
-        int row = matrix.length - 1;
-        int col = 0;
-        while (row >= 0 && col < matrix[0].length) {
-            if (matrix[row][col] > key) {
-                row--;
-            } else if (matrix[row][col] < key) {
-                col++;
-            } else {
-                System.out.println("Row is : " + row);
-                System.out.println("Col is : " + col);
-                break;
+    public static boolean isPalindrome(String s) {
+        String temp = "";
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c) || Character.isLetter(c)) {
+                temp += c;
             }
         }
+
+        for (int i = 0 ; i < temp.length()/2 ; i++) {
+            if (temp.charAt(i) != temp.charAt(temp.length() - 1 - i)) {
+                return false;
+            }
+        }
+
+        return true;
     }
-  
     public static void main (String args[]) {
-        int matrix[][] = { {1,2,3,4},
-                           {5,6,7,8},
-                           {9,10,11,12},
-                           {13,14,15,16}};
-        search(matrix, 15);
+        String s = " ";
+        System.out.println(isPalindrome(s));
     }
 }
