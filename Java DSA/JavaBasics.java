@@ -1,23 +1,28 @@
 public class JavaBasics {
 
-    public static boolean isPalindrome(String s) {
-        String temp = "";
-        for (char c : s.toCharArray()) {
-            if (Character.isDigit(c) || Character.isLetter(c)) {
-                temp += c;
+    public static float shortestPath(String s) {
+        int x = 0;
+        int y = 0;
+        for (int i = 0 ; i < s.length() ; i++) {
+            char c = s.charAt(i);
+            if (c == 'N') {
+                y++;
+            } else if (c == 'S') {
+                y--;
+            } else if (c == 'E') {
+                x++;
+            } else if (c == 'W') {
+                x--;
             }
         }
 
-        for (int i = 0 ; i < temp.length()/2 ; i++) {
-            if (temp.charAt(i) != temp.charAt(temp.length() - 1 - i)) {
-                return false;
-            }
-        }
+        x = x*x;
+        y = y*y;
 
-        return true;
+        return (float)Math.sqrt(x+y);
     }
     public static void main (String args[]) {
-        String s = " ";
-        System.out.println(isPalindrome(s));
+        String s = "NWSE";
+        System.out.println(shortestPath(s));
     }
 }
