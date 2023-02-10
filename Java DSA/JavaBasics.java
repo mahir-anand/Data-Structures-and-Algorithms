@@ -1,28 +1,23 @@
 public class JavaBasics {
 
-    public static float shortestPath(String s) {
-        int x = 0;
-        int y = 0;
-        for (int i = 0 ; i < s.length() ; i++) {
-            char c = s.charAt(i);
-            if (c == 'N') {
-                y++;
-            } else if (c == 'S') {
-                y--;
-            } else if (c == 'E') {
-                x++;
-            } else if (c == 'W') {
-                x--;
+    public static StringBuilder compress (String s) {
+        StringBuilder temp = new StringBuilder();
+        for (int i = 0 ; i < s.length(); i++) {
+            Integer count = 0;
+            while (i < s.length() - 1 && s.charAt(i) == s.charAt(i+1)) {
+                i++;
+                count++;
+            }
+            temp.append(s.charAt(i));
+            if (count > 0) {
+                temp.append(count);
             }
         }
 
-        x = x*x;
-        y = y*y;
-
-        return (float)Math.sqrt(x+y);
+        return temp;
     }
     public static void main (String args[]) {
-        String s = "NWSE";
-        System.out.println(shortestPath(s));
+        String s = "aabbbczzzzzż";
+        System.out.println(compress(s));
     }
 }
