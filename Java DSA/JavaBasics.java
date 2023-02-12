@@ -1,23 +1,30 @@
 public class JavaBasics {
 
-    public static StringBuilder compress (String s) {
-        StringBuilder temp = new StringBuilder();
-        for (int i = 0 ; i < s.length(); i++) {
-            Integer count = 0;
-            while (i < s.length() - 1 && s.charAt(i) == s.charAt(i+1)) {
-                i++;
+    public static int print2largest(int arr[], int n) {
+        
+        int max = Integer.MIN_VALUE;
+        int secMax = Integer.MIN_VALUE;
+        int count = 0;
+        for (int i = 0 ; i < n ; i ++) {
+            if (arr[i] > max) {
+                secMax = max;
+                max = arr[i];
+                count++;
+            } else if (arr[i] > secMax && arr[i] != max) {
+                secMax = arr[i];
                 count++;
             }
-            temp.append(s.charAt(i));
-            if (count > 0) {
-                temp.append(count);
-            }
         }
-
-        return temp;
+       
+       if (count < 2) {
+           return -1;
+       } else {
+        return secMax;   
+       }
+        
     }
     public static void main (String args[]) {
-        String s = "aabbbczzzzzż";
-        System.out.println(compress(s));
+        int num[] = {2,1,4,5,6,4,3};
+        System.out.println(print2largest(num, 7));
     }
 }
