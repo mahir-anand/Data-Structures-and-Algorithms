@@ -1,22 +1,19 @@
 public class JavaBasics {
 
-    public static boolean check(int[] nums) {
-        int count = 0;
-        for (int i = 1 ; i < nums.length ; i++) {
-            if (nums[i-1] > nums[i]) {
-                count++;
+   
+    public static int removeDuplicates(int arr[]) {
+        int i = 0;
+        for (int j = 1 ; j < arr.length ; j++) {
+            if (arr[j] != arr[i]) {
+                i++;
+                arr[i] = arr[j];
             }
         }
-        if (nums[nums.length -1 ] > nums[0]) {
-            count++;
-        }
-
-        return count<=1;
+        return i+1;
     }
-        
 
     public static void main (String args[]) {
-        int num[] = {2,2,2,2,2,2,1,2};
-        System.out.println(check(num));
+        int num[] = {1,2,4,4};
+        System.out.println(removeDuplicates(num));
     }
 }
