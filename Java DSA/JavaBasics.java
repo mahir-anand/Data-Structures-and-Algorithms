@@ -1,19 +1,31 @@
 public class JavaBasics {
 
    
-    public static int removeDuplicates(int arr[]) {
-        int i = 0;
-        for (int j = 1 ; j < arr.length ; j++) {
-            if (arr[j] != arr[i]) {
-                i++;
-                arr[i] = arr[j];
-            }
+    public static void rotate(int[] nums, int k) {
+        int n = nums.length;
+        k = k % n;
+        //one part
+        reverse(nums,0,n-k-1);
+        //second part
+        reverse(nums,n-k,n-1);
+        //whole
+        reverse(nums,0,n-1);
+    }
+    public static void reverse (int nums[], int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
         }
-        return i+1;
     }
 
     public static void main (String args[]) {
         int num[] = {1,2,4,4};
-        System.out.println(removeDuplicates(num));
+        rotate(num,1);
+        for (int i = 0 ; i < num.length ; i++) {
+            System.out.print(num[i] + " ");
+        }
     }
 }
