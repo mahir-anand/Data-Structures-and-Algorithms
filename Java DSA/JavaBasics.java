@@ -1,31 +1,28 @@
 public class JavaBasics {
 
    
-    public static void rotate(int[] nums, int k) {
+    public static void moveZeroes(int[] nums) {
+        int i = -1 ;
+        int j = 0 ;
         int n = nums.length;
-        k = k % n;
-        //one part
-        reverse(nums,0,n-k-1);
-        //second part
-        reverse(nums,n-k,n-1);
-        //whole
-        reverse(nums,0,n-1);
-    }
-    public static void reverse (int nums[], int start, int end) {
-        while (start < end) {
-            int temp = nums[start];
-            nums[start] = nums[end];
-            nums[end] = temp;
-            start++;
-            end--;
+        while (j < n) {
+            if (nums[j] != 0) {
+                i++;
+                int temp = nums[j];
+                nums[j] = nums[i];
+                nums[i] = temp;
+                j++;
+            } else {
+                j++;
+            }
         }
     }
 
     public static void main (String args[]) {
-        int num[] = {1,2,4,4};
-        rotate(num,1);
-        for (int i = 0 ; i < num.length ; i++) {
-            System.out.print(num[i] + " ");
+        int num[] = {0,1,0,0,2,0,4};
+        moveZeroes(num);
+        for (int i : num) {
+            System.out.print(i + " ");
         }
     }
 }
