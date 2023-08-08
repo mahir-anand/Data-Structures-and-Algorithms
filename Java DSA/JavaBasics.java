@@ -1,49 +1,31 @@
+import java.util.*;
+
 public class JavaBasics {
-    
-    public static void missing (int arr[]) {
-        int xor = 0;
-        for (int i = 0 ; i < arr.length ; i++) {
-            xor ^= arr[i];
-        }
 
-        for (int i = 1 ; i <= arr.length ; i++) {
-            xor ^= i;
-        }
-
-        int rightSetBit = xor & -xor;
-
-        int x = 0 , y = 0;
-        for (int i = 0 ; i < arr.length ; i++) {
-            if ((arr[i] & rightSetBit) == 1) {
-                x ^= arr[i];
-            } else {
-                y ^= arr[i];
-            }
-        }
-
-        for (int i = 1 ; i <= arr.length ; i++) {
-            if ((i & rightSetBit) == 1) {
-                x ^= i;
-            } else {
-                y ^= i;
-            }
-        }
-
-        for (int i = 0 ; i < arr.length ; i++) {
-            if (arr[i] == x) {
-                System.out.println("Repeating : " + x);
-                System.out.println("Missing : " + y);
-                break;
-            } else if (arr[i] == y) {
-                System.out.println("Repeating : " + y);
-                System.out.println("Missing : " + x);
-                break;
-            }
-        }
+    public static ArrayList<Integer> findUnion(int arr1[], int arr2[], int n, int m) {
+       ArrayList<Integer> union = new ArrayList<>();
+       int i = 0, j = 0;
+       while (i < n && j < m) {
+           if (arr1[i] < arr2[j]) {
+               i++;
+           } else if (arr1[i] > arr2[j]) {
+               j++;
+           } else {
+               if (union.size()==0 || union.get(union.size()-1)!=arr1[i]) {
+                   union.add(arr1[i]);
+               }
+               i++;
+               j++;
+           }
+       }
+       
+    return union;
     }
-
     public static void main (String args[]) {
-        int arr [] = {1,2,1,4,5,6};
-        missing(arr);
+        int arr1[] = {1,2,2,4,5};
+        int arr2[] = {2,3,4,5};
+        int n = arr1.length;
+        int m = arr2.length;
+        System.out.println(findUnion(arr1, arr2, n, m));
     }
 }
