@@ -1,34 +1,23 @@
 public class MaxSubarraySum {
     
     public static int maxSubarraySum(int arr[]) {
-        int curSum = 0;
-        int maxSum = Integer.MIN_VALUE;
-
-        int maxNeg = Integer.MIN_VALUE;
-        int negCount = 0;
+        int sum = 0;
+        int max = Integer.MIN_VALUE;
 
         for (int i = 0 ; i < arr.length ; i++) {
+            sum += arr[i];
 
-            if (arr[i] < 0) {
-                negCount++;
-                maxNeg = Math.max(arr[i],maxNeg);
+            max = Math.max(sum,max);
+
+            if (sum < 0) {
+                sum = 0;
             }
-
-            curSum += arr[i];
-
-            if (curSum < 0) {
-                curSum = 0;
-            }
-            maxSum = Math.max (curSum,maxSum);
         }
 
-        if (negCount == arr.length) {
-            return maxNeg;
-        }
-        return maxSum;
+        return max;
     }
     public static void main (String args[]) {
-        int arr[] = {-1,-2};
+        int arr[] = {4,-1,-2,7};
         System.out.println(maxSubarraySum(arr));
     }
 }
