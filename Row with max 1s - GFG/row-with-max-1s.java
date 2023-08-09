@@ -35,22 +35,27 @@ public class Main {
 
 class Solution {
     int rowWithMax1s(int arr[][], int n, int m) {
-        int row = 0, col = m - 1, count = 0, maxCount = 0, maxRow = -1;
+        int row = 0, col = m - 1;
+        int count = 0, maxCount = Integer.MIN_VALUE, maxRow = -1;
         while (row < n && col >= 0) {
             if (arr[row][col] == 1) {
-                count++;
                 col--;
-                if (col < 0) {
-                    return row;
-                }
+                count++;
             } else {
+                //count = m - 1 - col;
                 if (count > maxCount) {
-                    maxCount = count;
                     maxRow = row;
+                    maxCount = count;
                 }
                 row++;
             }
         }
+        if (count == 0) {
+            return -1;
+        } else if (col < 0) {
+            return row;    
+        }
+        
         return maxRow;
     }
 }
