@@ -10,9 +10,10 @@ public class SearchSortedMatrix {
             } else {
                 System.out.print(row + " ");
                 System.out.print(col + " ");
-                break;
+                return;
             }
         }
+        System.out.println("not found");
     }
     public static void main (String args[]) {
         int matrix [][] = { {1,2,3,4},
