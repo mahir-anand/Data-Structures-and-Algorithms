@@ -4,16 +4,12 @@ public class BinarySearchMatrix {
         
         int start = 0;
         int n = matrix.length;
-
         if (n == 0) {
             return;
         }
-        
         int m = matrix[0].length;
         int end = (n * m) - 1;
 
-        
-        
         while (start <= end) {
             int mid = start + (end-start)/2;
             if (matrix[mid / m][mid % m] > target) {
