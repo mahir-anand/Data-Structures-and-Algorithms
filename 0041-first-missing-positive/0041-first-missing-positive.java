@@ -15,7 +15,7 @@ class Solution {
             }
             
         }
-        System.out.println("HERE");
+
         for (int i = 0 ; i < nums.length ; i++) {
             if (nums[i] != i + 1) {
                 return i+1;
