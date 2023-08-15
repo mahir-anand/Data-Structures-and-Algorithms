@@ -1,5 +1,3 @@
-import java.lang.Math;
-
 class Solution {
     public List<Integer> findDisappearedNumbers(int[] nums) {
         ArrayList<Integer> arr = new ArrayList<Integer>();
