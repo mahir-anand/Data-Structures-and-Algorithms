@@ -124,11 +124,64 @@ public class MazePaths {
         
     }
 
+    public static void allPaths (boolean[][] arr, int row, int col, int[][] ans, int step) {
+
+        step++;
+
+        if (row == arr.length - 1 && col == arr.length-1) {
+            ans[row][col] = step;
+            printMatrix(ans);
+            return;
+        }
+
+        if (arr[row][col] != false) {
+            arr[row][col] = false;
+        } else {
+            return;
+        }
+
+        ans[row][col] = step;
+
+        if (row < arr.length - 1) {
+            allPaths (arr, row + 1, col, ans, step);
+        }
+        
+        if (col < arr[0].length - 1) {
+            allPaths (arr, row, col + 1, ans, step);
+        }
+        
+        if (row > 0) {
+            allPaths (arr, row - 1, col, ans, step);
+        }
+
+        if (col > 0) {
+            allPaths (arr, row, col - 1, ans, step);
+        }
+
+        arr[row][col] = true;
+        ans[row][col] = 0;
+        step--;
+        
+    }
+
+    public static void printMatrix(int[][] arr) {
+        for (int i = 0 ; i < arr.length ; i++) {
+            for (int j = 0 ; j < arr[0].length ; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
     public static void main (String args[]) {
         boolean[][] arr = { {true,true,true},
                             {true,true,true},
                             {true,true,true}};
-        allPaths (arr,0,0,"");
+        int[][] ans = { {0,0,0},
+                      {0,0,0},
+                      {0,0,0}};
+        allPaths (arr,0,0,ans,0);
         // System.out.println("Total Paths : " + maze(3, 0, 0));
     }
     
