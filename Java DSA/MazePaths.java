@@ -90,11 +90,45 @@ public class MazePaths {
         mazePathsObstacle (arr,len, row + 1, col, ans + "D");
 
     }
+
+    public static void allPaths (boolean[][] arr, int row, int col, String ans) {
+
+        if (row == arr.length - 1 && col == arr.length-1) {
+            System.out.println(ans);
+            return;
+        }
+
+        if (arr[row][col] != false) {
+            arr[row][col] = false;
+        } else {
+            return;
+        }
+
+        if (row < arr.length - 1) {
+            allPaths (arr, row + 1, col, ans + "D");
+        }
+        
+        if (col < arr[0].length - 1) {
+            allPaths (arr, row, col + 1, ans + "R");
+        }
+        
+        if (row > 0) {
+            allPaths (arr, row - 1, col, ans + "U");
+        }
+
+        if (col > 0) {
+             allPaths (arr, row, col - 1, ans + "L");
+        }
+
+        arr[row][col] = true;
+        
+    }
+
     public static void main (String args[]) {
-        int[][] arr = { {0,0,0},
-                      {0,0,1},
-                      {0,0,0}};
-        mazePathsObstacle (arr, 3,0,0,"");
+        boolean[][] arr = { {true,true,true},
+                            {true,true,true},
+                            {true,true,true}};
+        allPaths (arr,0,0,"");
         // System.out.println("Total Paths : " + maze(3, 0, 0));
     }
     
