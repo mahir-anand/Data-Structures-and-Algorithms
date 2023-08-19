@@ -2,21 +2,21 @@ import java.util.ArrayList;
 
 public class Permutations {
 
-    public static ArrayList<String> perm (String str, String ans) {
+    public static int perm (String str, String ans) {
 
         if (str.isEmpty()) {
-            ArrayList<String> temp = new ArrayList<String>();
-            temp.add(ans);
-            return temp;
+            return 1;
         }
 
-        ArrayList<String> list = new ArrayList<String>();
+        int count = 0;
 
         for (int i = 0 ; i < str.length() ; i++) {
-            list.addAll (perm (str.substring(0,i) + str.substring(i+1), ans + str.charAt(i)) );
+            count = count + perm (str.substring(0,i) + str.substring(i+1), ans + str.charAt(i));
         }
 
-        return list;
+        return count;
+
+      
     }
     public static void main (String args[]) {
         String str = "abc";

@@ -7,7 +7,7 @@ public class MergeSort {
         if (start >= end) {
             return;
         }
-
+        
         int mid = start + (end - start)/2;
 
         mergeSort (arr, start, mid);

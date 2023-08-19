@@ -24,12 +24,10 @@ public class LinearRecursion {
 
         if (arr[index] == target) {
             list.add(index);
-            linearAll(arr, target, index+1, list);
+            return linearAll(arr, target, index+1, list);
         } else {
-            linearAll(arr, target, index + 1, list);
+            return linearAll(arr, target, index + 1, list);
         }
-
-        return list;
     }
 
     public static void main (String args[]) {

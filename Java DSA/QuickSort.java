@@ -37,7 +37,7 @@ public class QuickSort {
 
     }
     public static void main (String args[]) {
-        int[] arr = {-1,0,100,1,5,2,4,9,3,6};
+        int[] arr = {5,4,1,3,2};
         quick(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
     }

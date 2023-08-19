@@ -2,11 +2,11 @@ public class SumOfDigits {
     
     public static int sum (int num) {
 
-        if (num == 1) {
-            return 1;
+        if (num%10 == num) {
+            return num;
         }
         
-        int add = (num%10) + sum(num/10);
+        int add = (num % 10) + sum(num/10);
 
         return add;
         
