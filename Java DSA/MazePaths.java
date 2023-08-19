@@ -59,9 +59,43 @@ public class MazePaths {
         mazePathsDiagonal (len, row + 1, col + 1, ans + "C" );
 
     }
+
+    public static void mazePathsObstacle (int[][] arr, int len, int row, int col, String ans) {
+
+        // reached the end
+        if (row == len - 1 && col == len - 1) {
+            System.out.println(ans);
+            return;
+        }
+
+        //found an obstacle
+        if (arr [row][col] == 1) {
+            return;
+        }
+
+        //last column
+        if (col == len - 1) {
+            mazePathsObstacle (arr, len, row + 1, col, ans + "D");
+            return;
+        }
+
+        //last row
+        if (row == len - 1) {
+            mazePathsObstacle (arr, len, row, col + 1, ans + "R");
+            return;
+        }
+
+
+        mazePathsObstacle (arr,len, row, col + 1, ans + "R");
+        mazePathsObstacle (arr,len, row + 1, col, ans + "D");
+
+    }
     public static void main (String args[]) {
-        mazePathsDiagonal (3,0,0,"");
-        System.out.println("Total Paths : " + maze(3, 0, 0));
+        int[][] arr = { {0,0,0},
+                      {0,0,1},
+                      {0,0,0}};
+        mazePathsObstacle (arr, 3,0,0,"");
+        // System.out.println("Total Paths : " + maze(3, 0, 0));
     }
     
 }
