@@ -133,7 +133,6 @@ public class LinkedList {
 
     }
 
-
     public void reverse () {
         Node prev = null;
         Node curr = tail = head; 
@@ -149,16 +148,90 @@ public class LinkedList {
         head = prev;
     }
 
+    public void deleteFromEnd (int n) {
+        //calculate size
+        int size = 0;
+        Node temp = head;
+        while (temp != null) {
+            size++;
+            temp = temp.next;
+        }
+
+        if (n == size) {
+            head = head.next;
+            return;
+        }
+
+        int i = 1;
+        int index = size - n; // index of the previous node
+        Node prev = head;
+        while (i < index) {
+            i++;
+            prev = prev.next;
+        }
+
+        prev.next = prev.next.next;
+        return;
+
+    }
+
+    public Node findMiddle (Node head) {
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+
+    }
+
+    public boolean palindrome () {
+
+        //corner case
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        // find the middle element
+        Node mid = findMiddle(head);
+
+        //reverse the second half
+        Node prev = null;
+        Node curr = mid;
+        Node next;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        Node rightHead = prev;
+
+        // check for palindrome
+        while (rightHead != null) {
+            if (head.data != rightHead.data) {
+                return false;
+            }
+            head = head.next;
+            rightHead = rightHead.next;
+        }
+
+        return true;
+    }
+
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
         ll.addFirst(2);
         ll.addFirst(1);
-        ll.addLast(3);
-        ll.addLast(4);
-        ll.add(2, 9);
+        ll.addLast(1);
+        ll.addLast(2);
         ll.print();
-        ll.reverse();
-        ll.print();
+        System.out.println(ll.palindrome());
     }
     
 }
