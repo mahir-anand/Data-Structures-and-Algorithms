@@ -108,6 +108,31 @@ public class LinkedList {
 
     }
 
+    public int iterativeSearch (int key) {
+        Node temp = head;
+        for (int i = 0 ; i < size ; i++) {
+            if (temp.data == key) {
+                return i;
+            }
+            temp = temp.next;
+        }
+        return -1;
+    }
+
+    public int recursiveSearch (Node head, int key, int index) {
+
+        if (head == null) {
+            return -1;
+        }
+
+        if (head.data == key) {
+            return index;
+        }
+
+        return recursiveSearch(head.next, key, index+1);
+
+    }
+
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
         ll.addFirst(2);
@@ -116,7 +141,7 @@ public class LinkedList {
         ll.addLast(4);
         ll.add(2, 9);
         ll.print();
-        System.out.println(ll.removeLast());
+        System.out.println(ll.recursiveSearch(head, 9, 0));
     }
     
 }
