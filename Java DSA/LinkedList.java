@@ -133,6 +133,22 @@ public class LinkedList {
 
     }
 
+
+    public void reverse () {
+        Node prev = null;
+        Node curr = tail = head; 
+        Node next;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        head = prev;
+    }
+
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
         ll.addFirst(2);
@@ -141,7 +157,8 @@ public class LinkedList {
         ll.addLast(4);
         ll.add(2, 9);
         ll.print();
-        System.out.println(ll.recursiveSearch(head, 9, 0));
+        ll.reverse();
+        ll.print();
     }
     
 }
