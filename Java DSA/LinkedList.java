@@ -266,17 +266,82 @@ public class LinkedList {
         fast.next = null;
     }
 
+    public Node mergeSort (Node head) {
 
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        //find the middle value
+        Node mid = getMid(head);
+
+        //recursive calls for left and right half
+        Node right = mid.next;
+        mid.next = null;
+        Node newLeft = mergeSort(head);
+        Node newRight = mergeSort(right);
+
+        //merge the sorted half
+        return merge(newLeft, newRight);
+    }
+
+    public Node merge (Node newLeft, Node newRight) {
+
+        Node mergedLL = new Node(-1); // auxiliary node
+        Node temp = mergedLL; //pointer for sorted linked list
+
+        while (newLeft != null && newRight != null) {
+            if (newLeft.data < newRight.data) {
+                temp.next = newLeft;
+                newLeft = newLeft.next;
+            } else {
+                temp.next = newRight;
+                newRight = newRight.next;
+            }
+            temp = temp.next;
+        }
+
+        while (newLeft != null) {
+            temp.next = newLeft;
+            newLeft = newLeft.next;
+            temp = temp.next;
+        }
+
+        while (newRight != null) {
+            temp.next = newRight;
+            newRight = newRight.next;
+            temp = temp.next;
+        }
+
+        return mergedLL.next;
+    }
+
+    public Node getMid(Node head) {
+
+        if (head.next.next == null) {
+            return head;
+        }
+        
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
-        head = new Node (1);
-        head.next = new Node (2);
-        Node temp = head.next;
-        head.next.next = new Node (3);
-        head.next.next.next = temp;
-        System.out.println(ll.cycle());
-        ll.removeCycle();
-        System.out.println(ll.cycle());
+        ll.addFirst(1);
+        ll.addFirst(2);
+        ll.addFirst(3);
+        ll.addFirst(4);
+        ll.addFirst(5);
+        ll.print();
+
+        ll.head = ll.mergeSort(ll.head);
         ll.print();
 
 
