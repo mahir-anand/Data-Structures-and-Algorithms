@@ -332,6 +332,48 @@ public class LinkedList {
 
         return slow;
     }
+
+    public void zigzag () {
+        //find mid
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        Node mid = slow;
+
+        //reverse the second half
+        Node curr = mid.next;
+        mid.next = null;
+        Node prev = null;
+        Node next;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        Node left = head;
+        Node right = prev;
+        Node nextLeft; Node nextRight;
+
+        //zig zag merge
+        while (left != null && right != null) {
+            nextLeft = left.next;
+            left.next = right;
+            nextRight = right.next;
+            right.next = nextLeft;
+
+            left = nextLeft;
+            right = nextRight;
+        }
+        
+    }
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
         ll.addFirst(1);
@@ -341,7 +383,7 @@ public class LinkedList {
         ll.addFirst(5);
         ll.print();
 
-        ll.head = ll.mergeSort(ll.head);
+        ll.zigzag();
         ll.print();
 
 
