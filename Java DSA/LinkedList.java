@@ -1,5 +1,9 @@
 public class LinkedList {
 
+    public static Node head;
+    public static Node tail;
+    public static int size;
+
     public static class Node {
 
         int data;
@@ -10,10 +14,6 @@ public class LinkedList {
             this.next = null;
         }
     }
-
-    public static Node head;
-    public static Node tail;
-    public static int size;
 
     public void addFirst (int data) {
 
@@ -69,6 +69,19 @@ public class LinkedList {
         newNode.next = temp.next;
         temp.next = newNode;
     }    
+
+    public void recursiveAdd (int index, int val, Node curr) {
+
+        if (index == 1) {
+            Node newNode = new Node(val);
+            Node temp = curr.next;
+            curr.next = newNode;
+            newNode.next = temp;
+            return;
+        }
+
+        recursiveAdd(index-1, val, curr.next);
+    }
 
     public int removeFirst() {
         if (size == 0) {
@@ -374,6 +387,12 @@ public class LinkedList {
         }
         
     }
+
+
+    // Leetcode questions and patterns
+
+
+
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
         ll.addFirst(1);
@@ -382,8 +401,7 @@ public class LinkedList {
         ll.addFirst(4);
         ll.addFirst(5);
         ll.print();
-
-        ll.zigzag();
+        ll.recursiveAdd(3, 7, head);
         ll.print();
 
 
