@@ -32,23 +32,20 @@ class Solution {
         int counter = size;
         temp = head;
         ListNode newHead = null;
-        while (counter > k) {
+        ListNode newTail = null;
+        ListNode tail = null;
+        
+        while (temp != null) {
             if (counter == k+1) {
+                newTail = temp;
                 newHead = temp.next;
-                temp.next = null;
-                break;
             }
+            tail = temp;
             temp = temp.next;
             counter--;
         }
         
-        temp = newHead;
-        ListNode tail = temp;
-        while (temp != null) {
-            tail = temp;
-            temp = temp.next;
-        }
-        
+        newTail.next = null;
         tail.next = head;
         head = newHead;
         
