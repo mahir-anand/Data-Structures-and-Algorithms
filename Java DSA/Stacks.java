@@ -2,29 +2,42 @@ import java.util.ArrayList;
 
 public class Stacks {
     
-    public static class stack {
+    static class node {
+        int data;
+        node next;
+        node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
-        static ArrayList<Integer> list = new ArrayList<>();
-
+    static class stack {
+        static node head = null;
+        
         public static boolean isEmpty() {
-            return list.size() == 0;
+            return head == null;
         }
 
-        public static void push (int data) {
-            list.add(data);
+        public static void push(int data) {
+            node temp = new node (data);
+            temp.next = head;
+            head = temp;
         }
 
-        public static int pop () {
-            int top = list.get(list.size() - 1);
-            list.remove(list.size() - 1);
-            return top;
+        public static int pop() {
+            if (isEmpty()) {
+                return -1;
+            }
+            int temp = head.data;
+            head = head.next;
+            return temp;
         }
 
         public static int peek() {
             if (isEmpty()) {
                 return -1;
             }
-            return list.get(list.size() - 1);
+            return head.data;
         }
     }
 
