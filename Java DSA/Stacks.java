@@ -1,28 +1,6 @@
 import java.util.*;
 
 public class Stacks {
-    
-    public static void pushBottom (Stack<Integer> s, int data) {
-        if (s.isEmpty()) {
-            s.push(data);
-            return;
-        }
-        
-        int top = s.pop();
-        pushBottom(s, data);
-        s.push(top);
-    }
-
-    public static void reverse (Stack<Integer> s) {
-        if (s.isEmpty()) {
-            return;
-        }
-
-        int top = s.pop();
-        reverse(s);
-        pushBottom(s,top);
-
-    }
 
     public static void printStack (Stack<Integer> s) {
         while (!s.isEmpty()) {
@@ -30,29 +8,30 @@ public class Stacks {
         }
     }
 
-    // public static String reverseString (String str) {
-    //     Stack<Character> s = new Stack<>();
-    //     int i = 0;
-    //     while (i < str.length()) {
-    //         s.push(str.charAt(i));
-    //         i++;
-    //     }
-
-    //     StringBuilder result = new StringBuilder();
-    //     while (!s.isEmpty()) {
-    //         char top = s.pop();
-    //         result.append(top);
-    //     }
-
-    //     return result.toString();
-    // }
-    public static void main(String[] args) {
+    public static void stockSpan (int[] stocks, int[] span) {
         Stack<Integer> s = new Stack<>();
-        s.push(1);
-        s.push(2);
-        s.push(3);
-        reverse(s);
-        printStack(s);
+        span[0] = 1;
+        s.push(0);
+        for (int i = 1 ; i < stocks.length ; i++) {
+            while (!s.isEmpty() && stocks[i] > stocks[s.peek()]) {
+                s.pop();
+            }
+            if (s.isEmpty()) {
+                span[i] = i + 1;
+            } else {
+                span[i] = i - s.peek();
+            }
+            s.push(i);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] stocks = {100,80,60,70,60,82,100};
+        int[] span = new int [stocks.length];
+        stockSpan (stocks, span);
+        for (int i : span) {
+            System.out.print(i + " ");
+        }
     }
 
 }
