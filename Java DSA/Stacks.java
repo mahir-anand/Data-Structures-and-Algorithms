@@ -8,30 +8,30 @@ public class Stacks {
         }
     }
 
-    public static void stockSpan (int[] stocks, int[] span) {
+    public static void nextGreat (int[] nums) {
         Stack<Integer> s = new Stack<>();
-        span[0] = 1;
-        s.push(0);
-        for (int i = 1 ; i < stocks.length ; i++) {
-            while (!s.isEmpty() && stocks[i] > stocks[s.peek()]) {
+        int[] result = new int[nums.length];
+
+        for (int i = nums.length - 1 ; i >= 0 ; i--) {
+            while (!s.isEmpty() && nums[s.peek()] <= nums[i]) {
                 s.pop();
             }
             if (s.isEmpty()) {
-                span[i] = i + 1;
+                result[i] = -1;
             } else {
-                span[i] = i - s.peek();
+                result[i] = nums [s.peek()];
             }
             s.push(i);
+        }
+
+        for (int i: result) {
+            System.out.print(i + " ");
         }
     }
 
     public static void main(String[] args) {
-        int[] stocks = {100,80,60,70,60,82,100};
-        int[] span = new int [stocks.length];
-        stockSpan (stocks, span);
-        for (int i : span) {
-            System.out.print(i + " ");
-        }
+        int[] nums = {-2,-100,-2,-9,12,4};
+        nextGreat(nums);
     }
 
 }
