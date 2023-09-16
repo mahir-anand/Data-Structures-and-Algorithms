@@ -8,31 +8,32 @@ public class Stacks {
         }
     }
 
-    public static boolean validParentheses (String str) {
+    public static boolean duplicateParenthesis (String str) {
         Stack<Character> s = new Stack<>();
+
         for (int i = 0 ; i < str.length() ; i++) {
-            if (str.charAt(i) == '(' || str.charAt(i) == '[' || str.charAt(i) == '{') {
+            if (str.charAt(i) != ')') {
                 s.push(str.charAt(i));
-            } else if (s.isEmpty()) {
-                return false;
-            } else if (str.charAt(i) == ')' && s.peek() == '(' || str.charAt(i) == ']' && s.peek() == '[' || str.charAt(i) == '}' && s.peek() == '{') {
-                s.pop();
             } else {
-                return false;
+                int count = 0;
+                while (!s.isEmpty() && s.peek() != '(') {
+                    s.pop();
+                    count++;
+                }
+                if (count < 1) {
+                    return true;
+                }
+                s.pop();
             }
         }
-
-        if (!s.isEmpty()) {
-            return false;
-        }
-
-        return true;
-
+        return false;
     }
 
+    
+
     public static void main(String[] args) {
-        String str = "({})[]";
-        System.out.println(validParentheses(str));
+        String str = "";
+        System.out.println(duplicateParenthesis(str));
     }
 
 }
