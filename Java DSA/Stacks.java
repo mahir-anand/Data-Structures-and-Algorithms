@@ -8,30 +8,31 @@ public class Stacks {
         }
     }
 
-    public static void nextGreat (int[] nums) {
-        Stack<Integer> s = new Stack<>();
-        int[] result = new int[nums.length];
-
-        for (int i = nums.length - 1 ; i >= 0 ; i--) {
-            while (!s.isEmpty() && nums[s.peek()] <= nums[i]) {
+    public static boolean validParentheses (String str) {
+        Stack<Character> s = new Stack<>();
+        for (int i = 0 ; i < str.length() ; i++) {
+            if (str.charAt(i) == '(' || str.charAt(i) == '[' || str.charAt(i) == '{') {
+                s.push(str.charAt(i));
+            } else if (s.isEmpty()) {
+                return false;
+            } else if (str.charAt(i) == ')' && s.peek() == '(' || str.charAt(i) == ']' && s.peek() == '[' || str.charAt(i) == '}' && s.peek() == '{') {
                 s.pop();
-            }
-            if (s.isEmpty()) {
-                result[i] = -1;
             } else {
-                result[i] = nums [s.peek()];
+                return false;
             }
-            s.push(i);
         }
 
-        for (int i: result) {
-            System.out.print(i + " ");
+        if (!s.isEmpty()) {
+            return false;
         }
+
+        return true;
+
     }
 
     public static void main(String[] args) {
-        int[] nums = {-2,-100,-2,-9,12,4};
-        nextGreat(nums);
+        String str = "({})[]";
+        System.out.println(validParentheses(str));
     }
 
 }
