@@ -3,35 +3,37 @@ import java.util.LinkedList;
 
 public class Queues {
     
-    public static void nonRepeating (String str) {
+    public static void interleave (Queue<Integer> q) {
 
-        int[] freq = new int [26];
-        Queue<Character> characters = new LinkedList<>();
+        Queue<Integer> first = new LinkedList<>();
         
-        for (int i = 0 ; i < str.length() ; i++) {
-            char ch = str.charAt(i);
-            characters.add(ch);
-            freq[ch-'a']++;
+        int size = q.size();
+        for (int i = 0 ; i < size / 2 ; i++) {
+            first.add(q.remove());
+        }
 
-            while (!characters.isEmpty() && freq[characters.peek() - 'a'] > 1) {
-                characters.remove();
-            }
-
-            if (characters.isEmpty()) {
-                System.out.print(-1);
-            } else {
-                System.out.print(characters.peek());
-            }
-            System.out.println();
-
+        while (!first.isEmpty()) {
+            q.add(first.remove());
+            q.add(q.remove());
         }
 
     }
+
     public static void main(String[] args) {
        
-        String str = "aabccxb";
-        nonRepeating(str);
+        Queue<Integer> q = new LinkedList<>();
+        q.add(1);
+        q.add(2);
+        q.add(3);
+        q.add(4);
+        q.add(5);
+        q.add(6);
 
+        interleave(q);
+        for (int i : q) {
+            System.out.print(i + " ");
+        }
+       
     }
 
 }
