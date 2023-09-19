@@ -2,30 +2,39 @@ import java.util.*;
 import java.util.LinkedList;
 
 public class Queues {
-    
-    public static void reverse (Queue<Integer> q) {
-        Stack<Integer> stack = new Stack<>();
-        while (!q.isEmpty()) {
-            stack.push(q.remove());
-        }
-        while (!stack.isEmpty()) {
-            q.add(stack.pop());
-        }
-    }
 
+    static class Stack {
+
+        static Deque<Integer> de = new LinkedList<>();
+
+        public static boolean isEmpty() {
+            return de.isEmpty();
+        }
+
+        public static void push(int data) {
+            de.addLast(data);
+        }
+
+        public static int pop() {
+            int top = de.peekLast();
+            de.removeLast();
+            return top;
+        }
+
+        public static int peek() {
+            return de.peekLast();
+        }
+
+    }
     public static void main(String[] args) {
        
-        Queue<Integer> q = new LinkedList<>();
-        q.add(1);
-        q.add(2);
-        q.add(3);
-        q.add(4);
-        q.add(5);
-        q.add(6);
+       Stack s = new Stack();
+       s.push(1);
+       s.push(2);
+       s.push(3);
 
-        reverse(q);
-        for (int i : q) {
-            System.out.print(i + " ");
+        while (!s.isEmpty()) {
+            System.out.println(s.pop());
         }
        
     }
