@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 public class Queues {
 
-    static class Stack {
+    static class Queue {
 
         static Deque<Integer> de = new LinkedList<>();
 
@@ -11,30 +11,30 @@ public class Queues {
             return de.isEmpty();
         }
 
-        public static void push(int data) {
+        public static void add(int data) {
             de.addLast(data);
         }
 
-        public static int pop() {
-            int top = de.peekLast();
-            de.removeLast();
+        public static int remove() {
+            int top = de.peek();
+            de.removeFirst();
             return top;
         }
 
         public static int peek() {
-            return de.peekLast();
+            return de.peek();
         }
 
     }
     public static void main(String[] args) {
        
-       Stack s = new Stack();
-       s.push(1);
-       s.push(2);
-       s.push(3);
+       Queue q = new Queue();
+       q.add(1);
+       q.add(2);
+       q.add(3);
 
-        while (!s.isEmpty()) {
-            System.out.println(s.pop());
+        while (!q.isEmpty()) {
+            System.out.println(q.remove());
         }
        
     }
