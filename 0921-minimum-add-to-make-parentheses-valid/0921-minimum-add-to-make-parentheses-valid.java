@@ -17,10 +17,12 @@ class Solution {
 
         }
         
-        while (!stack.isEmpty()) {
-            stack.pop();
-            count++;
-        }
+        // while (!stack.isEmpty()) {
+        //     stack.pop();
+        //     count++;
+        // }
+        
+        count += stack.size();
         
         return count;    
 
