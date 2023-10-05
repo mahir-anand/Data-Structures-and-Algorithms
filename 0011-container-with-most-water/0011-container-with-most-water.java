@@ -4,7 +4,7 @@ class Solution {
         int curWater = 0;
         int maxWater = Integer.MIN_VALUE;
         
-        while (left < height.length && right >= 0 && left < right ) {
+        while (left < right ) {
             curWater = Math.min(height[left], height[right]) * (right - left);
             maxWater = Math.max(maxWater, curWater);
             if (height[left] < height[right]) {
