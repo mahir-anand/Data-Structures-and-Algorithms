@@ -19,7 +19,7 @@ class Solution {
             } else {
                 end = mid;
             }
-            peak = start;
+            peak = end;
         }
         
         start = 0;
