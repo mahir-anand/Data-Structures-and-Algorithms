@@ -59,51 +59,51 @@ class Solution
 {
     void merge(int arr[], int l, int m, int r)
     {
-         int[] ans = new int[(r-l) + 1];
-         int i = l, j = m + 1, k = 0;
-         
-         while (i <= m && j <= r) {
-             if (arr[i] < arr[j]) {
-                 ans [k] = arr[i];
-                 i++;
-             } else {
-                 ans[k] = arr[j];
-                 j++;
-             }
-             k++;
-         }
-         
-         while (i <= m) {
-             ans [k] = arr[i];
-             i++; k ++;
-         }
-         
-         while (j <= r) {
-             ans [k] = arr[j];
-             j++; k++;
-         }
-         
-         int key = l;
-         for (int val = 0 ; val < ans.length ; val ++) {
-             arr[key] = ans[val];
-             key++;
-         }
-         
-         
-    }
-    
-    void mergeSort(int arr[], int l, int r)
-    {
-        //base case
-        if (l == r) {
-            return;
+        int temp[] = new int[r-l + 1];
+        int i = l;
+        int j = m + 1;
+        int k = 0;
+        
+        while (i <= m && j <= r) {
+            if (arr[i] < arr [j]) {
+                temp[k] = arr[i];
+                i++;
+            } else {
+                temp[k] = arr[j];
+                j++;
+            }
+            k++;
         }
         
-        int mid = l + (r-l)/2;
+        while (i <= m) {
+            temp[k] = arr[i];
+            i++; 
+            k++;
+        }
         
-        mergeSort (arr, l, mid);
-        mergeSort (arr, mid + 1, r);
+        while (j <= r) {
+            temp[k] = arr[j];
+            j++;
+            k++;
+        }
         
-        merge (arr, l, mid, r);
+        i = l;
+        for (k = 0 ; k < temp.length ; k++) {
+            arr[i] = temp[k];
+            i++;
+        }
+        
+    }
+    void mergeSort(int arr[], int l, int r)
+    {
+        
+    if (l >= r) {
+        return;
+    }
+        
+       int mid = l + (r-l)/2;
+       mergeSort(arr, l, mid);
+       mergeSort(arr, mid + 1 , r);
+       merge(arr,l,mid,r);
     }
 }
