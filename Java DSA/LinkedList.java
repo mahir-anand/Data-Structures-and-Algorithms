@@ -224,16 +224,17 @@ public class LinkedList {
         }
 
         Node rightHead = prev;
+        Node fast = rightHead;
 
         // check for palindrome
-        while (rightHead != null) {
-            if (head.data != rightHead.data) {
+        while (fast != null) {
+            if (head.data != fast.data) {
                 return false;
             }
             head = head.next;
-            rightHead = rightHead.next;
+            fast = fast.next;
         }
-
+        
         return true;
     }
 
@@ -391,19 +392,58 @@ public class LinkedList {
 
     // Leetcode questions and patterns
 
+    public void removeDuplicates() {
+        Node temp = head;
+        Node itr = temp.next;
+
+        while (itr != null) {
+            if (temp.data == itr.data) {
+                itr = itr.next;
+                size--;
+            } else {
+                temp.next = itr;
+                temp = itr;
+                itr = itr.next;
+            }
+        }
+        
+        tail = temp;
+        tail.next = null;
+    }
+
+
+    public static Node detectCycle(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next !=null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                slow = head;
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                    if (slow == fast) {
+                        return slow;
+                    }
+                }
+                return slow;
+            }
+        }
+        
+        return null;
+    }
 
 
     public static void main(String[] args) {
-        LinkedList ll = new LinkedList();
-        ll.addFirst(1);
-        ll.addFirst(2);
-        ll.addFirst(3);
-        ll.addFirst(4);
-        ll.addFirst(5);
-        ll.print();
-        ll.recursiveAdd(3, 7, head);
-        ll.print();
+        Node head = new Node(7);
+        head.next = new Node(11);
+        head.next.next = new Node(13);
+        head.next.next.next = head;
 
+        // ll.detectCycle(head);
+        Node ans = detectCycle(head);
+        System.out.println(ans.data);
 
     }
     

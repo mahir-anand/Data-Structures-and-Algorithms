@@ -1,5 +1,1 @@
-if (arr[row][col] != false) {
-            arr[row][col] = false;
-        } else {
-            return;
-        }
+ans [row][i] = ".";

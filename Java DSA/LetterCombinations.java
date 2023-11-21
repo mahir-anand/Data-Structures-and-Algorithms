@@ -45,8 +45,7 @@ public class LetterCombinations {
     }
 
     public static void main (String args[]) {
-        String str = "213";
-        String[] list = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+        String str = "23";
         System.out.println(letters(str, ""));
     }
     
