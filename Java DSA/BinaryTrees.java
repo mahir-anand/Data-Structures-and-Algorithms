@@ -83,9 +83,6 @@ public class BinaryTrees {
                         q.add(curr.right);
                     }
                 }
-                
-                
-                
             }
 
         }
