@@ -108,13 +108,24 @@ public class BinaryTrees {
 
         }
 
+        public static int sumOfNodes (Node root) {
+            if (root == null) {
+                return 0;
+            }
+            int ls = sumOfNodes(root.left);
+            int rs = sumOfNodes(root.right);
+
+            return ls + rs + root.data;
+
+        }
+
     }
 
     public static void main(String[] args) {
         int[] nodes = {1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1}; 
         binaryTrees tree = new binaryTrees();  
         Node root = tree.buildTree(nodes);
-        System.out.println(tree.countNodes(root));
+        System.out.println(tree.sumOfNodes(root));
 
     }
 
