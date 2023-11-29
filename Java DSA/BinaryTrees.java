@@ -97,8 +97,16 @@ public class BinaryTrees {
             return Math.max(lh,rh) + 1;
         }
 
-        
+        public static int countNodes (Node root) {
+            if (root == null) {
+                return 0;
+            }
+            int lc = countNodes(root.left);
+            int rc = countNodes(root.right);
 
+            return lc + rc + 1;
+
+        }
 
     }
 
@@ -106,7 +114,7 @@ public class BinaryTrees {
         int[] nodes = {1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1}; 
         binaryTrees tree = new binaryTrees();  
         Node root = tree.buildTree(nodes);
-        System.out.println(tree.height(root));
+        System.out.println(tree.countNodes(root));
 
     }
 
