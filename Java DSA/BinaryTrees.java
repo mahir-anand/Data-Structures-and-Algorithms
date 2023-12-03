@@ -15,6 +15,16 @@ public class BinaryTrees {
         }
     }
 
+    static class Info {
+        Node node;
+        int hd;
+        
+        public Info (Node node, int hd) {
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+
     static class binaryTrees {
         static int i = -1;
         public static Node buildTree(int[] nodes) {
@@ -134,6 +144,52 @@ public class BinaryTrees {
             return Math.max(self,Math.max(ld, rd));
 
         }
+
+    public static ArrayList<Integer> topView(Node root) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        Queue<Info> q = new LinkedList<>();
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int min = 0, max = 0;
+        
+        if (root == null) {
+            return ans;
+        }
+        
+        q.add(new Info(root,0));
+        q.add(null);
+        
+        while (!q.isEmpty()) {
+            Info curr = q.remove();
+            if (curr == null) {
+                if (q.isEmpty()) {
+                    break;
+                } else {
+                    q.add(null);
+                }
+            } else {
+                if (!map.containsKey(curr.hd)) {
+                    map.put(curr.hd,curr.node.data);
+                }
+                
+                if (curr.node.left != null) {
+                    q.add(new Info(curr.node.left, curr.hd - 1));
+                    min = Math.min(curr.hd-1, min);
+                }
+                
+                if (curr.node.right != null) {
+                    q.add(new Info(curr.node.right, curr.hd + 1));
+                    max = Math.max(curr.hd + 1 , max);
+                }
+            }
+        }
+        
+        for (int i = min; i <= max ; i++) {
+            ans.add(map.get(i));
+        }
+        
+        return ans;
+        
+    }
 
     }
 
