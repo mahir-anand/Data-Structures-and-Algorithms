@@ -186,9 +186,25 @@ public class BinaryTrees {
         for (int i = min; i <= max ; i++) {
             ans.add(map.get(i));
         }
-        
+
         return ans;
         
+    }
+
+    public static void kth(Node root, int level, int k) {
+
+        if (root == null) {
+            return;
+        }
+
+        if (k == level) {
+            System.out.print(root.data + " ");
+            return;
+        }
+
+        kth(root.left, level, k+1);
+        kth(root.right, level, k+1);
+
     }
 
     }
@@ -197,7 +213,7 @@ public class BinaryTrees {
         int[] nodes = {1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1}; 
         binaryTrees tree = new binaryTrees();  
         Node root = tree.buildTree(nodes);
-        System.out.println(tree.diameter(root));
+        tree.kth(root, 3, 1);
 
     }
 
