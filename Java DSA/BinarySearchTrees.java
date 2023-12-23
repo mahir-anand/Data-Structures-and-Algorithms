@@ -26,6 +26,24 @@ public class BinarySearchTrees {
         return root;
     }
  
+    public static boolean search(Node root, int val) {
+        
+        if (root == null) {
+            return false;
+        }
+
+        if (root.data == val) {
+            return true;
+        }
+
+        if (root.data > val) {
+            return search(root.left, val);
+        } else {
+            return search(root.right,val);
+        }
+
+    }
+
     public static void inorder(Node root) {
         
         if (root == null) {
@@ -41,11 +59,11 @@ public class BinarySearchTrees {
         int[] values = {5,1,3,4,2,7};
         Node root = null;
 
-        for (int i = 0 ; i < values.length ; i++) {
+        for (int i = 0 ; i < values.length; i++) {
             root = insert(root,values[i]);
         }
 
-        inorder(root);
+        System.out.println(search(root, 7));
 
     }
 }
