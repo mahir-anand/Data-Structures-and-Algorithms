@@ -146,21 +146,55 @@ public class BinarySearchTrees {
 
     }
 
-
-    public static void main(String[] args) {
-        int[] values = {8,5,3,1,4,6,10,11,14};
-        Node root = null;
-
-        for (int i = 0 ; i < values.length; i++) {
-            root = insert(root,values[i]);
+    public static Node mirror (Node root) {
+        
+        if (root == null) {
+            return root;
         }
 
-       inorder(root);
-       System.out.println();
+        Node temp = root.left;
+        root.left = root.right;
+        root.right = temp;
 
-       int min = Integer.MIN_VALUE;
-       int max = Integer.MAX_VALUE;
-       System.out.println(validate(root, min, max));
+        mirror(root.left);
+        mirror(root.right);
+
+        return root;
+
+    }
+
+    public static void preOrder (Node root) {
+        if (root == null) {
+            return;
+        }
+
+        System.out.print(root.data + " ");
+        preOrder(root.left);
+        preOrder(root.right);
+    }
+
+
+    public static void main(String[] args) {
+        // int[] values = {8,5,3,1,4,6,10,11,14};
+        // Node root = null;
+
+        // for (int i = 0 ; i < values.length; i++) {
+        //     root = insert(root,values[i]);
+        // }
+
+        Node root = new Node(8);
+        root.left = new Node(5);
+        root.right = new Node(10);
+        root.left.left = new Node(3);
+        root.left.right = new Node(6);
+        root.right.right = new Node(11);
+
+        preOrder(root);
+        System.out.println();
+        root = mirror(root);
+        preOrder(root);
+
+
 
     }
 }
