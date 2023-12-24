@@ -132,6 +132,21 @@ public class BinarySearchTrees {
         path.remove(path.size() - 1);
     }
 
+    public static boolean validate (Node root, int min, int max) {
+
+        if (root == null) {
+            return true;
+        }
+
+        if (root.data <= min || root.data >= max) {
+            return false;
+        }
+
+        return validate(root.left, min, root.data) && validate(root.right, root.data, max);
+
+    }
+
+
     public static void main(String[] args) {
         int[] values = {8,5,3,1,4,6,10,11,14};
         Node root = null;
@@ -143,7 +158,9 @@ public class BinarySearchTrees {
        inorder(root);
        System.out.println();
 
-       rootToLeaf(root, new ArrayList<>());
+       int min = Integer.MIN_VALUE;
+       int max = Integer.MAX_VALUE;
+       System.out.println(validate(root, min, max));
 
     }
 }
