@@ -1,7 +1,39 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class Heaps {
+
+
+    static class Heap {
+        
+        ArrayList<Integer> arr = new ArrayList<>();
+
+        public void add (int data) {
+            arr.add(data);
+
+            int x = arr.size() - 1; // child index
+            int par = (x - 1) / 2; // parent index
+
+            while (arr.get(x) < arr.get(par)) {
+                int temp = arr.get(x);
+                arr.set(x, arr.get(par));
+                arr.set(par, temp);
+                x = par;
+                par = (x-1)/2;
+            }
+
+        }
+
+        public void print () {
+            for (int i = 0 ; i < arr.size() ; i++) {
+                System.out.print(arr.get(i) + " ");
+            }
+            System.out.println();
+        }
+
+    }
+    
 
     static class Student implements Comparable<Student> {
         
@@ -21,18 +53,14 @@ public class Heaps {
     }
 
     public static void main(String[] args) {
-        PriorityQueue<Student> pq = new PriorityQueue<>(); 
-        //PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
-        //PriorityQueue<Integer> pq = new PriorityQueue<>();
-        pq.add(new Student("A", 4));
-        pq.add(new Student("B", 5));
-        pq.add(new Student("C", 2));
-        pq.add(new Student("D", 12));
-
-        while(!pq.isEmpty()) {
-            System.out.println(pq.peek().name + " --> " + pq.peek().rank);
-            pq.remove();
-        }
+        Heap h = new Heap();
+        h.add(2);
+        h.add(3);
+        h.add(4);
+        h.add(5);
+        h.add(10);
+        h.add(1);
+        h.print();
     }
     
 }
