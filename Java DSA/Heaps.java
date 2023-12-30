@@ -41,11 +41,11 @@ public class Heaps {
             int right = 2 * i + 2;
             int min = i;
             
-            if (left < arr.size() && left < arr.get(min)) {
+            if (left < arr.size() && arr.get(left) < arr.get(min)) {
                 min = left;
             }
 
-            if (right < arr.size() && right < arr.get(min)) {
+            if (right < arr.size() && arr.get(right) < arr.get(min)) {
                 min = right;
             }
 
@@ -78,6 +78,48 @@ public class Heaps {
             return arr.size() == 0;
         }
 
+        public static void heapSort (int[] arr) {
+            
+            //max heap
+            int n = arr.length;
+            for (int i = n/2 ; i >=0 ; i--) {
+                heapify2(i,n,arr);
+            }
+
+            //push largest at end
+            for (int i = n - 1 ; i >=0 ; i--) {
+                int temp = arr[0];
+                arr[0] = arr[i];
+                arr[i] = temp;
+
+                heapify2(0,i,arr);
+            }
+        }
+
+        public static void heapify2 (int i, int n, int[] arr) {
+            
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int max = i;
+
+            if (left < n && arr[left] > arr[max]) {
+                max = left;
+            }
+
+            if (right < n && arr[right] > arr[max]) {
+                max = right;
+            }
+
+            if (max != i) {
+                int temp = arr[i];
+                arr[i] = arr[max];
+                arr[max] = temp;
+
+                heapify2(max, n, arr);
+            }
+
+        }
+
     }
     
 
@@ -99,16 +141,12 @@ public class Heaps {
     }
 
     public static void main(String[] args) {
-        Heap h = new Heap();
-        h.add(3);
-        h.add(4);
-        h.add(1);
-        h.add(10);
-        h.add(5);
         
-        while (!h.isEmpty()) {
-            System.out.println(h.peek());
-            h.delete();
+        int[] arr = {1,2,4,5,3};
+        Heap.heapSort(arr);
+
+        for (int i : arr) {
+            System.out.print(i + " ");
         }
 
     }
