@@ -27,11 +27,27 @@ public class Tries {
 
     }
 
+    public static boolean search(String word) {
+        Node curr = root;
+        for (int level = 0; level < word.length(); level++) {
+            int idx = word.charAt(level) - 'a';
+            if (curr.children[idx] == null) {
+                return false;
+            }
+            curr = curr.children[idx];
+        }
+
+        return curr.eow == true;
+
+    }
+
     public static void main(String[] args) {
         String[] words = { "the", "a", "their" };
         for (int i = 0; i < words.length; i++) {
             insert(words[i]);
         }
+        System.out.println(search("the"));
+        System.out.println(search("ab"));
     }
 
 }
