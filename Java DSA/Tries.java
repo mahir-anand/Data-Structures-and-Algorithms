@@ -3,11 +3,13 @@ public class Tries {
     static class Node {
         Node children[] = new Node[26];
         boolean eow = false;
+        int freq;
 
         Node() {
             for (int i = 0; i < 25; i++) {
                 children[i] = null;
             }
+            freq = 1;
         }
     }
 
@@ -19,6 +21,8 @@ public class Tries {
             int idx = word.charAt(level) - 'a';
             if (curr.children[idx] == null) {
                 curr.children[idx] = new Node();
+            } else {
+                curr.children[idx].freq++;
             }
             curr = curr.children[idx];
         }
@@ -41,6 +45,25 @@ public class Tries {
 
     }
 
+    public static void findPrefix(Node root, String ans) {
+
+        if (root == null) {
+            return;
+        }
+
+        if (root.freq == 1) {
+            System.out.println(ans);
+            return;
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if (root.children[i] != null) {
+                findPrefix(root.children[i], ans + (char) (i + 'a'));
+            }
+        }
+
+    }
+
     public static boolean wordBreak(String key) {
 
         if (key.length() == 0) {
@@ -58,11 +81,14 @@ public class Tries {
     }
 
     public static void main(String[] args) {
-        String[] words = { "the", "a", "their" };
+        String[] words = { "zebra", "dog", "duck", "dove" };
         for (int i = 0; i < words.length; i++) {
             insert(words[i]);
         }
-        System.out.println(wordBreak("thaarathe"));
+
+        root.freq = -1;
+        findPrefix(root, "");
+
     }
 
 }
