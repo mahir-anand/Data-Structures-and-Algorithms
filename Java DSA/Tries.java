@@ -64,6 +64,20 @@ public class Tries {
 
     }
 
+    public static boolean startsWith(String word) {
+        Node curr = root;
+        for (int level = 0; level < word.length(); level++) {
+            int idx = word.charAt(level) - 'a';
+            if (curr.children[idx] == null) {
+                return false;
+            }
+            curr = curr.children[idx];
+        }
+
+        return true;
+
+    }
+
     public static boolean wordBreak(String key) {
 
         if (key.length() == 0) {
@@ -86,8 +100,7 @@ public class Tries {
             insert(words[i]);
         }
 
-        root.freq = -1;
-        findPrefix(root, "");
+        System.out.println(startsWith(""));
 
     }
 
