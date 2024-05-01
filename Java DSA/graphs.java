@@ -68,12 +68,26 @@ public class graphs {
 
     }
 
+    public static void dfs(ArrayList<Edge>[] graph, int curr, boolean[] vis) {
+        // visit
+        System.out.print(curr + " ");
+        vis[curr] = true;
+
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edge e = graph[curr].get(i);
+            if (!vis[e.dest]) {
+                dfs(graph, e.dest, vis);
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
         int V = 7;
         // int[] arr = new arr[V];
         ArrayList<Edge>[] graph = new ArrayList[V];
         createGraph(graph);
-        bfs(graph);
+        dfs(graph, 0, new boolean[V]);
     }
 
 }
