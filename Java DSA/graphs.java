@@ -21,7 +21,8 @@ public class graphs {
             graph[i] = new ArrayList<>();
         }
 
-        // graph[0].add(new Edge(0, 1, 1));
+        graph[0].add(new Edge(0, 3, 1));
+
         graph[2].add(new Edge(2, 3, 1));
         // graph[0].add(new Edge(0, 3, 1));
 
@@ -247,37 +248,51 @@ public class graphs {
     // s.push(cur);
     // }
 
-    public static void calcIndeg(ArrayList<Edge>[] graph, int[] indeg) {
-        for (int i = 0; i < graph.length; i++) {
-            int v = i;
-            for (int j = 0; j < graph[v].size(); j++) {
-                Edge e = graph[v].get(j);
-                indeg[e.dest]++;
-            }
+    // public static void calcIndeg(ArrayList<Edge>[] graph, int[] indeg) {
+    // for (int i = 0; i < graph.length; i++) {
+    // int v = i;
+    // for (int j = 0; j < graph[v].size(); j++) {
+    // Edge e = graph[v].get(j);
+    // indeg[e.dest]++;
+    // }
+    // }
+    // }
+
+    // public static void topSort(ArrayList<Edge>[] graph) {
+    // int[] indeg = new int[graph.length];
+    // calcIndeg(graph, indeg);
+    // Queue<Integer> q = new LinkedList<>();
+
+    // for (int i = 0; i < indeg.length; i++) {
+    // if (indeg[i] == 0) {
+    // q.add(i);
+    // }
+    // }
+
+    // while (!q.isEmpty()) {
+    // int cur = q.remove();
+    // System.out.print(cur + " ");
+    // for (int i = 0; i < graph[cur].size(); i++) {
+    // Edge e = graph[cur].get(i);
+    // indeg[e.dest]--;
+    // if (indeg[e.dest] == 0) {
+    // q.add(e.dest);
+    // }
+    // }
+    // }
+
+    // }
+
+    public static void allPath(ArrayList<Edge>[] graph, int src, int dest, String path) {
+
+        if (src == dest) {
+            System.out.println(path + dest);
+            return;
         }
-    }
 
-    public static void topSort(ArrayList<Edge>[] graph) {
-        int[] indeg = new int[graph.length];
-        calcIndeg(graph, indeg);
-        Queue<Integer> q = new LinkedList<>();
-
-        for (int i = 0; i < indeg.length; i++) {
-            if (indeg[i] == 0) {
-                q.add(i);
-            }
-        }
-
-        while (!q.isEmpty()) {
-            int cur = q.remove();
-            System.out.print(cur + " ");
-            for (int i = 0; i < graph[cur].size(); i++) {
-                Edge e = graph[cur].get(i);
-                indeg[e.dest]--;
-                if (indeg[e.dest] == 0) {
-                    q.add(e.dest);
-                }
-            }
+        for (int i = 0; i < graph[src].size(); i++) {
+            Edge e = graph[src].get(i);
+            allPath(graph, e.dest, dest, path + src);
         }
 
     }
@@ -287,7 +302,8 @@ public class graphs {
         // int[] arr = new arr[V];
         ArrayList<Edge>[] graph = new ArrayList[V];
         createGraph(graph);
-        topSort(graph);
+        int src = 5, dest = 1;
+        allPath(graph, src, dest, "");
     }
 
 }
