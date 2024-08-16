@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 public class graphs {
 
-    static class Edge {
+    static class Edge implements Comparable<Edge> {
         int src;
         int dest;
         int wt;
@@ -14,26 +14,53 @@ public class graphs {
             this.wt = w;
         }
 
-    }
-
-    static void createGraph(ArrayList<Edge> graph[]) {
-        for (int i = 0; i < graph.length; i++) {
-            graph[i] = new ArrayList<>();
+        @Override
+        public int compareTo(Edge e2) {
+            return this.wt - e2.wt;
         }
 
-        graph[0].add(new Edge(0, 1, 10));
-        graph[0].add(new Edge(0, 2, 15));
-        graph[0].add(new Edge(0, 3, 30));
+    }
 
-        graph[1].add(new Edge(1, 0, 10));
-        graph[1].add(new Edge(1, 3, 40));
+    static void createGraph(ArrayList<Edge> edges) {
 
-        graph[2].add(new Edge(2, 0, 15));
-        graph[2].add(new Edge(2, 3, 30));
+        edges.add(new Edge(0, 1, 10));
+        edges.add(new Edge(0, 2, 15));
+        edges.add(new Edge(0, 3, 30));
+        edges.add(new Edge(1, 3, 40));
+        edges.add(new Edge(2, 3, 50));
 
-        graph[3].add(new Edge(3, 1, 40));
-        graph[3].add(new Edge(3, 2, 50));
+    }
 
+    static int n = 4;
+    static int[] par = new int[n];
+    static int[] rank = new int[n];
+
+    public static void init() {
+        for (int i = 0; i < n; i++) {
+            par[i] = i;
+        }
+    }
+
+    public static int find(int x) {
+        if (par[x] == x) {
+            return x;
+        }
+
+        return par[x] = find(par[x]);
+    }
+
+    public static void union(int a, int b) {
+        int parA = find(a);
+        int parB = find(b);
+
+        if (rank[parA] == rank[parB]) {
+            par[parA] = parB;
+            rank[parB]++;
+        } else if (rank[parA] > rank[parB]) {
+            par[parB] = parA;
+        } else {
+            par[parA] = parB;
+        }
     }
 
     // static void createGraph2(ArrayList<Edge> graph) {
@@ -379,53 +406,75 @@ public class graphs {
 
     // }
 
-    static class Pair implements Comparable<Pair> {
-        int v;
-        int cost;
+    // static class Pair implements Comparable<Pair> {
+    // int v;
+    // int cost;
 
-        public Pair(int v, int c) {
-            this.v = v;
-            this.cost = c;
-        }
+    // public Pair(int v, int c) {
+    // this.v = v;
+    // this.cost = c;
+    // }
 
-        @Override
-        public int compareTo(Pair p2) {
-            return this.cost - p2.cost;
-        }
+    // @Override
+    // public int compareTo(Pair p2) {
+    // return this.cost - p2.cost;
+    // }
 
-    }
+    // }
 
-    public static void prims(ArrayList<Edge>[] graph) {
+    // public static void prims(ArrayList<Edge>[] graph) {
 
-        boolean vis[] = new boolean[graph.length];
-        PriorityQueue<Pair> pq = new PriorityQueue<>();
-        pq.add(new Pair(0, 0));
-        int finalCost = 0;
+    // boolean vis[] = new boolean[graph.length];
+    // PriorityQueue<Pair> pq = new PriorityQueue<>();
+    // pq.add(new Pair(0, 0));
+    // int finalCost = 0;
 
-        while (!pq.isEmpty()) {
+    // while (!pq.isEmpty()) {
 
-            Pair curr = pq.remove();
+    // Pair curr = pq.remove();
 
-            if (!vis[curr.v]) {
-                vis[curr.v] = true;
-                finalCost += curr.cost;
+    // if (!vis[curr.v]) {
+    // vis[curr.v] = true;
+    // finalCost += curr.cost;
 
-                for (int i = 0; i < graph[curr.v].size(); i++) {
-                    Edge e = graph[curr.v].get(i);
-                    pq.add(new Pair(e.dest, e.wt));
-                }
+    // for (int i = 0; i < graph[curr.v].size(); i++) {
+    // Edge e = graph[curr.v].get(i);
+    // pq.add(new Pair(e.dest, e.wt));
+    // }
+    // }
+    // }
+
+    // System.out.println(finalCost);
+
+    // }
+
+    public static void kruskals(ArrayList<Edge> edges, int V) {
+        init();
+        Collections.sort(edges);
+        int count = 0;
+        int cost = 0;
+
+        for (int i = 0; count < V - 1; i++) {
+            Edge e = edges.get(i);
+
+            int parA = e.src;
+            int parB = e.dest;
+
+            if (parA != parB) {
+                union(parA, parB);
+                cost += e.wt;
+                count++;
             }
         }
 
-        System.out.println(finalCost);
-
+        System.out.println(cost);
     }
 
     public static void main(String[] args) {
         int V = 4;
-        ArrayList<Edge> graph[] = new ArrayList[V];
-        createGraph(graph);
-        prims(graph);
+        ArrayList<Edge> edges = new ArrayList<>();
+        createGraph(edges);
+        kruskals(edges, V);
     }
 
 }
