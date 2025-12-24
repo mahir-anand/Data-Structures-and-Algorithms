@@ -11,10 +11,7 @@ class Solution {
         one[1] = 10000;
         second[0] = 10000;
         second[1] = cost[1];
-
-        // one = [10, max, ] 20+max, 20+10
-        // second = [max, 15, ]
-
+        
         for (int i = 2 ; i < cost.length ; i++) {
             one[i] = Math.min(cost[i]+one[i-1], cost[i]+one[i-2]);
             second[i] = Math.min(cost[i] + second[i-1], cost[i] + second[i-2]);
